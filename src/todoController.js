@@ -4,11 +4,11 @@ const Todo = (
     isChecked,
     project,
     priority,
-    duedate,
+    dueDate,
     description,
     creationDate
 ) => {
-    return {id, title, isChecked, project, priority, duedate, description, creationDate};
+    return {id, title, isChecked, project, priority, dueDate, description, creationDate};
 };
 
 const todoController = (() => {
@@ -16,10 +16,10 @@ const todoController = (() => {
     let ids = 0;
 
     // Adds a new todo to todos[] and assign it an ID
-    function addTodo(title, isChecked, project, priority, duedate, description, creationDate) {
+    function addTodo(title, isChecked, project, priority, dueDate, description, creationDate) {
         ids++;
         const id = ids;  
-        const _new = Todo(id, title, isChecked, project, priority, duedate, description, creationDate);
+        const _new = Todo(id, title, isChecked, project, priority, dueDate, description, creationDate);
         todos.push(_new);
     }
     
@@ -29,7 +29,7 @@ const todoController = (() => {
         todos.splice(_index, 1);
     }
 
-    function editTodo(id, title, isChecked, project, priority, duedate, description, creationDate) {
+    function editTodo(id, title, isChecked, project, priority, dueDate, description, creationDate) {
         const _todo = findTodoById(id);
         console.log(_todo);
 
@@ -37,7 +37,7 @@ const todoController = (() => {
         _todo.isChecked = isChecked;
         _todo.project = project;
         _todo.priority = priority;
-        _todo.duedate = duedate;
+        _todo.dueDate = dueDate;
         _todo.description = description;
         _todo.creationDate = creationDate;
     }
