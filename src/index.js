@@ -1,9 +1,6 @@
 import './style.css';
 import { todoController } from './todoController.js';
 
-console.log("hello webpack");
-
-
 function helloWorld() {
     const text = document.createElement('h1');
     text.textContent = "Hello World!";
@@ -21,6 +18,7 @@ todoController.addTodo('finish slides for presentation', true, "work");
 
 console.log(todoController.getTodos());
 
-todoController.removeTodo(2);
+todoController.editTodo(2, "go to school", false, "school");
 
 console.log(todoController.getTodos());
+

@@ -23,15 +23,29 @@ const todoController = (() => {
         todos.push(_new);
     }
     
+    // Remove todo by ID
     function removeTodo(id) {
         const _index = findIndexById(id);
         todos.splice(_index, 1);
     }
+
+    function editTodo(id, title, isChecked, project, priority, duedate, description, creationDate) {
+        const _todo = findTodoById(id);
+        console.log(_todo);
+
+        _todo.title = title;
+        _todo.isChecked = isChecked;
+        _todo.project = project;
+        _todo.priority = priority;
+        _todo.duedate = duedate;
+        _todo.description = description;
+        _todo.creationDate = creationDate;
+    }
     
-    // Finds todo by ID, returning object
+    // Finds todo by ID, returning object NOT SURE IF I NEED THIS ONE
     function findTodoById(id) {
         console.log(todos);
-        const result = todos.filter(todo => {
+        const result = todos.find(todo => {
             if (todo.id === id) {
                 return todo;
             }
@@ -48,13 +62,12 @@ const todoController = (() => {
         };
     };
 
-
     // DEBUG - Returns todos array
     function getTodos() {
         return todos;
     }
 
-    return { addTodo, getTodos, removeTodo };
+    return { addTodo, getTodos, removeTodo, editTodo };
 
 })();
 
