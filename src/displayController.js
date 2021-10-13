@@ -5,8 +5,6 @@ const displayController = (() => {
     const mainContent = document.getElementById('main-content');
     const listContainer = document.getElementById('list-container')
 
-
-
     function initDisplay() {
         const _todos = todoController.getTodos();
 
@@ -14,12 +12,22 @@ const displayController = (() => {
 
         _todos.forEach(todo => {
 
-            // create todo  with 3 containers inside
+            // create todo with 3 containers inside
             const todoListItem = document.createElement('div');
+            let isExpanded = false;
+
             todoListItem.classList.add('todo-list-item');
             todoListItem.id = todo.id;
             todoListItem.addEventListener('click', () => {
-                expandTodo(todoListItem.id);
+                if (isExpanded) {
+                    isExpanded = false;
+                    todoListItem.classList.remove('expanded');
+                } else {
+                    isExpanded = true;
+                    todoListItem.classList.add('expanded');
+                    expandTodo(todoListItem);
+                }
+                
             });
 
             const _left = document.createElement('p');
@@ -31,6 +39,14 @@ const displayController = (() => {
             _leftContainer.classList.add('left-container');
             _check.classList.add('todo-check');
             _check.setAttribute("type", "checkbox");
+
+            // Bullet point event
+            _check.addEventListener('click', (event) => {
+                console.log(_check.checked);
+                _check.checked != _check.checked;
+                event.stopPropagation();
+            })
+
             _left.classList.add('todo-list-text');
             _left.classList.add('todo-left');
             _center.classList.add('todo-list-text');
@@ -61,9 +77,13 @@ const displayController = (() => {
         });
     }
 
-    function expandTodo(id) {
-        console.log(`Checking for todo with ID: ${id}`);
-        console.log(todoController.findTodoById(id));
+    function expandTodo(todoListItem) {
+        const description = document.createElement('div');
+        const _todo = todoController.findTodoById(todoListItem.id);
+        description.textContent = _todo.description;
+
+        // i was right HERE!!!!!
+
     }
 
     return { initDisplay };

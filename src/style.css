@@ -93,8 +93,28 @@ body {
     border-bottom: 1px solid rgba(0,0,0,0.1);
     width: 100%;
 
-    display: flex;
+    display: grid;
+    grid-template-columns: 6fr 5fr 1fr;
     justify-content: space-between;
+}
+
+.todo-list-item:hover {
+    background-color: rgba(0,0,0,0.01);
+}
+
+/* .todo-list-text:hover {
+    background-color: rgba(0,0,0,0.1);
+} */
+
+.todo-list-text::after {
+    width: 50px;
+    height: 50px;
+    background-color: blue;
+    border-radius: 50%;
+}
+
+.expanded {
+    grid-template-rows: 1fr 1fr 1fr;
 }
 
 .todo-check {
@@ -122,8 +142,8 @@ body {
 
 
 .list-legend {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 6fr 5fr 1fr;
     width: 100%;
 }
 
