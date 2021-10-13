@@ -1,6 +1,8 @@
 # TODO
 
-// displayController    
+// checkmarks for isChecked
+// 
+
 // localStorage     
 // dates    
 // figure out sublists      

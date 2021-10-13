@@ -44,9 +44,8 @@ const todoController = (() => {
     
     // Finds todo by ID, returning object NOT SURE IF I NEED THIS ONE
     function findTodoById(id) {
-        console.log(todos);
         const result = todos.find(todo => {
-            if (todo.id === id) {
+            if (todo.id == id) {
                 return todo;
             }
         });
@@ -56,7 +55,7 @@ const todoController = (() => {
     // Finds index of todo with given ID
     function findIndexById(id) {
         for (let i = 0; i < todos.length; i++) {
-           if (todos[i].id === id) {
+           if (todos[i].id == id) {
                 return i;
            };
         };
@@ -67,11 +66,9 @@ const todoController = (() => {
         return todos;
     }
 
-    return { addTodo, getTodos, removeTodo, editTodo };
+    return { addTodo, getTodos, removeTodo, editTodo, findTodoById };
 
 })();
-
-
 
 
 export { Todo, todoController };

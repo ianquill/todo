@@ -83,6 +83,11 @@ body {
     width: 100%;
 }
 
+.left-container {
+    display: flex;
+    align-items: center;
+}
+
 .todo-list-item {
     padding: 20px;
     border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -90,6 +95,21 @@ body {
 
     display: flex;
     justify-content: space-between;
+}
+
+.todo-check {
+    appearance: none;
+    -webkit-appearence: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px black dotted;
+    margin-right: 14px;
+}
+
+.todo-check:checked {
+    background-color: #FF686B;
 }
 
 .todo-center {

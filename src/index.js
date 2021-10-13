@@ -12,3 +12,5 @@ todoController.addTodo('buy birthday gift', false, "home");
 todoController.addTodo('finish slides for presentation', true, "work");
 
 displayController.initDisplay();
+
+console.log(todoController.findTodoById(3));
