@@ -1,7 +1,10 @@
 # TODO
 
-// checkmarks for isChecked             
-//      
+// get all attributes from todo in displayController, then replace them with textContent where relevant, then send to todoController.editTodo
+
+// isChecked change on click, editTodo()            
+// sidebar functionality        
+// make editing fields more obvious
 
 // localStorage             
 // dates            
@@ -10,3 +13,5 @@
 
 // drag and drop API            
 // https://web.dev/drag-and-drop/       
+
+// <select> pulldown for priority (maybe put this into expanded card and not normal todo)        

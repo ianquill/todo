@@ -8,8 +8,6 @@ const displayController = (() => {
     function initDisplay() {
         const _todos = todoController.getTodos();
 
-        console.log(_todos);
-
         _todos.forEach(todo => {
 
             // create todo with 3 containers inside
@@ -17,7 +15,17 @@ const displayController = (() => {
             let isExpanded = false;
 
             todoListItem.classList.add('todo-list-item');
+            
+            console.log(todoListItem.description);
             todoListItem.id = todo.id;
+            todoListItem.title = todo.title;
+            todoListItem.isChecked = todo.isChecked;
+            todoListItem.project = todo.project;
+            todoListItem.priority = todo.priority;
+            todoListItem.dueDate = todo.dueDate;
+            todoListItem.description = todo.description;
+            todoListItem.creationDate = todo.creationDate;
+
             todoListItem.addEventListener('click', () => {
                 if (isExpanded) {
                     isExpanded = false;
@@ -46,10 +54,24 @@ const displayController = (() => {
                 console.log(_check.checked);
                 _check.checked != _check.checked;
                 event.stopPropagation();
-            })
+            });
 
+            // testing editable content
             _left.classList.add('todo-list-text');
             _left.classList.add('todo-left');
+            _left.addEventListener('click', (event) => {
+                _left.contentEditable = true;
+                _left.spellcheck = false;
+
+                event.stopPropagation();
+            });
+            _left.addEventListener('input', () => {
+                getContent();
+
+                console.log("input fired");
+                todoController.editTodo(); // fill these args with a getText function
+            });
+
             _center.classList.add('todo-list-text');
             _center.classList.add('todo-center');
             _right.classList.add('todo-list-text');
@@ -88,9 +110,8 @@ const displayController = (() => {
         deleteButton.classList.add('todo-delete');
         deleteButton.onclick = () => {
             todoListItem.remove();
-
-            // still need logic to connect to todoController here and remove the associated entry by ID;
-
+            todoController.removeTodo(todoListItem.id);
+            console.log(todoController.getTodos());
         }
 
         todoListItem.append(description, deleteButton);
@@ -101,6 +122,10 @@ const displayController = (() => {
         const deleteButton = todoListItem.querySelector('.todo-delete');
         todoListItem.removeChild(description);
         todoListItem.removeChild(deleteButton);
+    }
+
+    function getContent(todoListItem) {
+        
     }
 
     return { initDisplay };
