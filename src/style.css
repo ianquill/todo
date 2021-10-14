@@ -32,6 +32,7 @@
 }
 
 body {
+    overflow: hidden;
     font-family: 'Roboto';
     color: black;
     padding: 0;
@@ -39,6 +40,9 @@ body {
 }
 
 #search-bar {
+    position: sticky;
+    overflow: hidden;
+    top: 0;
     height: 38px;
     width: 100%;
     background-color: #9B7EDE;
@@ -50,21 +54,28 @@ body {
 }
 
 #side-bar {
+    overflow: hidden;
     z-index: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    height: 100vh;
+    height: 85vh;
     width: 200px;
     gap: 14px;
-    margin-top: 80px;
+    margin-top: 0px;
     margin-left: 50px;
 }
 
 .logo {
-    font-size: 52px;
+    font-size: 36px;
     user-select: none;
+    margin-top: 20px;
+    margin-bottom: 80px;
+}
+
+.logo-right {
+    color: #FF686B;
 }
 
 .project {
@@ -73,12 +84,16 @@ body {
 }
 
 #list-container {
+    overflow-x: hidden;
+    overflow-y: scroll;
     z-index: 5;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    height: 85vh; 
 
     padding: 100px;
+    padding-top: 40px;
     box-shadow: -2px 0px 1px rgba(0,0,0,0.1);
     width: 100%;
 }
@@ -102,15 +117,23 @@ body {
     background-color: rgba(0,0,0,0.01);
 }
 
-/* .todo-list-text:hover {
-    background-color: rgba(0,0,0,0.1);
-} */
+.todo-description {
+    grid-row-start: 2;
+    grid-row-end: 4;
+    padding: 10px;
+}
 
-.todo-list-text::after {
-    width: 50px;
-    height: 50px;
-    background-color: blue;
+.todo-delete {
+    background-color: #FF686B;
+    color: white;
+    border: 0;
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 3;
+    grid-column-end: 4;
 }
 
 .expanded {

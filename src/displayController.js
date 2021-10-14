@@ -22,6 +22,7 @@ const displayController = (() => {
                 if (isExpanded) {
                     isExpanded = false;
                     todoListItem.classList.remove('expanded');
+                    closeTodo(todoListItem);
                 } else {
                     isExpanded = true;
                     todoListItem.classList.add('expanded');
@@ -79,11 +80,27 @@ const displayController = (() => {
 
     function expandTodo(todoListItem) {
         const description = document.createElement('div');
+        const deleteButton = document.createElement('button');
         const _todo = todoController.findTodoById(todoListItem.id);
         description.textContent = _todo.description;
+        description.classList.add('todo-description');
+        deleteButton.textContent = "X";
+        deleteButton.classList.add('todo-delete');
+        deleteButton.onclick = () => {
+            todoListItem.remove();
 
-        // i was right HERE!!!!!
+            // still need logic to connect to todoController here and remove the associated entry by ID;
 
+        }
+
+        todoListItem.append(description, deleteButton);
+    }
+
+    function closeTodo(todoListItem) {
+        const description = todoListItem.querySelector('.todo-description');
+        const deleteButton = todoListItem.querySelector('.todo-delete');
+        todoListItem.removeChild(description);
+        todoListItem.removeChild(deleteButton);
     }
 
     return { initDisplay };
