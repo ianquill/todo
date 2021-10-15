@@ -125,7 +125,11 @@ body {
 }
 
 .todo-list-text:hover {
-    color: #9B7EDE;
+    color: rgba(0,0,0,0.8);
+}
+
+.todo-list-text {
+    padding: 6px;
 }
 
 .todo-description {

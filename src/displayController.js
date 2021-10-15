@@ -16,7 +16,7 @@ const displayController = (() => {
     function createTodo(todo) {
         // create todo with 3 containers inside
         const todoListItem = document.createElement('div');
-        let isExpanded = false;
+        todoListItem.isExpanded = false;
 
         todoListItem.classList.add('todo-list-item');
         
@@ -30,12 +30,12 @@ const displayController = (() => {
         todoListItem.creationDate = todo.creationDate;
 
         todoListItem.addEventListener('click', () => {
-            if (isExpanded) {
-                isExpanded = false;
+            if (todoListItem.isExpanded) {
+                todoListItem.isExpanded = false;
                 todoListItem.classList.remove('expanded');
                 closeTodo(todoListItem);
             } else {
-                isExpanded = true;
+                todoListItem.isExpanded = true;
                 todoListItem.classList.add('expanded');
                 expandTodo(todoListItem);
             }
@@ -59,7 +59,6 @@ const displayController = (() => {
 
         // Bullet point event
         _check.addEventListener('click', (event) => {
-            console.log(_check.checked);
             _check.checked != _check.checked;
             event.stopPropagation();
         });
@@ -68,19 +67,10 @@ const displayController = (() => {
         _left.classList.add('todo-list-text');
         _left.classList.add('todo-title');
         _left.classList.add('todo-left');
-        _left.addEventListener('click', (event) => {
-            _left.contentEditable = true;
-            _left.spellcheck = false;
 
-            event.stopPropagation();
-        });
-        _left.addEventListener('input', () => {
-            const content = getContent(todoListItem);
-            todoController.editTodo(content[0], content[1], content[2], content[3], content[4], content[5], content[6]);
-            console.log(todoController.findTodoById(1));
-            console.log("input fired");
-            // todoController.editTodo(); // fill these args with a getText function
-        });
+        makeEditable(_left, todoListItem);
+        makeEditable(_center, todoListItem);
+        makeEditable(_right, todoListItem);
 
         _center.classList.add('todo-list-text');
         _center.classList.add('todo-center');
@@ -97,10 +87,10 @@ const displayController = (() => {
 
             if (key === "title") {
                 _left.textContent = todo[key];
-            };
+            }
             if (key === "dueDate") {
                 _center.textContent = todo[key];
-            };
+            }
             if (key === "priority") {
                 _right.textContent = todo[key];
             };
@@ -117,28 +107,35 @@ const displayController = (() => {
         const deleteButton = document.createElement('button');
         const _todo = todoController.findTodoById(todoListItem.id);
         description.textContent = _todo.description;
+        description.classList.add('todo-list-text');
         description.classList.add('todo-description');
         description.id = todoListItem.id;
+        makeEditable(description, todoListItem);
+
         deleteButton.textContent = "X";
         deleteButton.classList.add('todo-delete');
         deleteButton.onclick = () => {
             todoListItem.remove();
             todoController.removeTodo(todoListItem.id);
-            console.log(todoController.getTodos());
         }
 
         todoListItem.append(description, deleteButton);
     }
 
+    // Closes expanded tab, saving
     function closeTodo(todoListItem) {
         const description = todoListItem.querySelector('.todo-description');
         const deleteButton = todoListItem.querySelector('.todo-delete');
+
+        // save before closing
+        const content = getContent(todoListItem);
+        todoController.editTodo(content[0], content[1], content[2], content[3], content[4], content[5], content[6]);
+
         todoListItem.removeChild(description);
         todoListItem.removeChild(deleteButton);
     }
 
     function getContent(todoListItem) {
-        // todoListItem.title = _left.textContent;         // this reference isn't working 
 
         const id = todoListItem.id;
         const titles = document.querySelectorAll('.todo-title');
@@ -146,7 +143,6 @@ const displayController = (() => {
         titles.forEach(element => {
             if (element.id == id) {
                 title = element.textContent;
-                console.log('set title');
                 todoListItem.title = title;
             }
         })
@@ -156,7 +152,6 @@ const displayController = (() => {
         checkboxes.forEach(element => {
             if (element.id == id) {
                 check = element.checked;
-                console.log(`set check to ${element.checked}`);
                 todoListItem.isChecked = check;
             }
         });
@@ -169,7 +164,6 @@ const displayController = (() => {
         priorities.forEach(element => {
             if (element.id == id) {
                 priority = element.textContent;
-                console.log(`set priority to ${priority}`);
                 todoListItem.priority = priority;
             }
         });
@@ -180,7 +174,6 @@ const displayController = (() => {
             descriptions.forEach(element => {
                 if (element.id == id) {
                     description = element.textContent;
-                    console.log("set description");
                     todoListItem.description = description;
                 }
             }); 
@@ -194,12 +187,28 @@ const displayController = (() => {
         dueDates.forEach(element => {
             if (element.id == id) {
                 dueDate = element.textContent;
-                console.log(`set duedate ${dueDate}`);
                 todoListItem.dueDate = dueDate;
             }
         });
 
         return [id, title, check, project, priority, dueDate, description];
+    }
+
+    function makeEditable(element, todoListItem) {
+        element.addEventListener('click', (event) => {
+                event.stopPropagation();
+        });
+        element.addEventListener('input', () => {
+            const content = getContent(todoListItem);
+            todoController.editTodo(content[0], content[1], content[2], content[3], content[4], content[5], content[6]);
+        });
+            
+        element.contentEditable = true;
+        element.spellcheck = false;
+    }
+
+    function getIsExpanded(todoListItem) {
+        return todoListItem.isExpanded;
     }
 
     return { initDisplay };
