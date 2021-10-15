@@ -59,7 +59,9 @@ const displayController = (() => {
 
         // Bullet point event
         _check.addEventListener('click', (event) => {
-            _check.checked != _check.checked;
+            const content = getContent(todoListItem);
+            todoController.editTodo(content[0], content[1], content[2], content[3], content[4], content[5], content[6]);
+            // _check.checked != _check.checked;
             event.stopPropagation();
         });
 
@@ -153,6 +155,7 @@ const displayController = (() => {
             if (element.id == id) {
                 check = element.checked;
                 todoListItem.isChecked = check;
+                console.log(`check is ${check}`);
             }
         });
 
