@@ -3,15 +3,79 @@ import { todoController } from "./todoController.js";
 const displayController = (() => {
     const content = document.getElementById('content');
     const mainContent = document.getElementById('main-content');
-    const listContainer = document.getElementById('list-container')
+    const listContainer = document.getElementById('list-container');
+    let currentProject = "all";
 
-    function initDisplay() {
-        const _todos = todoController.getTodos();
+    function updateDisplay() {
+        removeAllChildNodes(listContainer);
+
+        // generate legend
+        const currentProjectTitle = document.createElement('h2');
+        const dueDateTitle = document.createElement('h2');
+        const projectTitle = document.createElement('h2');
+        const listLegend = document.createElement('div');
+        listLegend.classList.add('list-legend');
+        currentProjectTitle.classList.add('title');
+        dueDateTitle.classList.add('title');
+        projectTitle.classList.add('title');
+        currentProjectTitle.textContent = currentProject;
+        // ^^ change this to a variable that changes when sidebar is clicked
+        dueDateTitle.textContent = "due";
+        projectTitle.textContent = "project";
+
+        listLegend.append(currentProjectTitle, dueDateTitle, projectTitle);
+        listContainer.appendChild(listLegend);
+
+        let _todos = todoController.getTodos();
+        if (currentProject !== "all") {
+            _todos = _todos.filter((element) => {
+                return element.project === currentProject;
+            })
+        }
 
         _todos.forEach(todo => {
             createTodo(todo);
         });
+
+        updateSidebar();
     }
+
+    // Clears sidebar and refreshes, trigger this on every edit (maybe just every edit to project)
+    function updateSidebar() {
+        const projects = todoController.getProjects();
+        const list = document.getElementById('side-bar-projects');
+
+        removeAllChildNodes(list);
+
+        const headline = document.createElement('li');
+        headline.classList.add('project');
+        headline.classList.add('headline');
+        headline.textContent = "projects";
+
+        const all = document.createElement('li');
+        all.classList.add('project');
+        all.classList.add('sidebar-link');
+        all.textContent = "all";
+        all.addEventListener('click', () => {
+            currentProject = "all";
+            updateDisplay();
+        });
+
+        list.append(headline, all);
+        
+        projects.forEach(project => {
+            const listItem = document.createElement('li');
+            listItem.classList.add('project');
+            listItem.classList.add('sidebar-link');
+            listItem.textContent = project;
+            listItem.addEventListener('click', () => {
+                currentProject = project;
+                updateDisplay();
+            });
+
+            list.appendChild(listItem);
+        });
+    };
 
     function createTodo(todo) {
         const todoListItem = document.createElement('div');
@@ -206,7 +270,13 @@ const displayController = (() => {
         element.spellcheck = false;
     }
 
-    return { initDisplay };
+    function removeAllChildNodes(parent) {
+        while (parent.firstChild) {
+            parent.removeChild(parent.firstChild);
+        }
+    }
+
+    return { updateDisplay };
 
 })();
 

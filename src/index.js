@@ -18,6 +18,6 @@ testing();
 testing();
 testing();
 
-displayController.initDisplay();
+displayController.updateDisplay();
 
 console.log(todoController.findTodoById(3));

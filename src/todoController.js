@@ -66,7 +66,22 @@ const todoController = (() => {
         return todos;
     }
 
-    return { addTodo, getTodos, removeTodo, editTodo, findTodoById };
+    function getProjects() {
+        const projects = [];
+
+        todos.forEach(todo => {
+            for (const key in todo) {
+                if (key === "project" && !projects.includes(todo[key])) {
+                    projects.push(todo[key]);
+                }
+            }
+            
+        });
+
+        return projects;
+    }
+
+    return { addTodo, getTodos, removeTodo, editTodo, findTodoById, getProjects };
 
 })();
 

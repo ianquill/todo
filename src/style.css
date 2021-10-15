@@ -79,6 +79,15 @@ body {
     padding-left: 0;
 }
 
+.sidebar-link {
+    cursor: pointer;
+}
+
+.sidebar-link:hover {
+    color: rgba(0,0,0,0.8);
+}
+
+
 .logo {
     font-size: 36px;
     user-select: none;
