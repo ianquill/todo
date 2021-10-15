@@ -5,6 +5,15 @@ const displayController = (() => {
     const mainContent = document.getElementById('main-content');
     const listContainer = document.getElementById('list-container');
     let currentProject = "all";
+    listContainer.addEventListener('click', () => {
+        console.log("triggered new note");
+        if (currentProject !== "all"){
+            todoController.addTodo("", "", currentProject);
+        } else {
+            todoController.addTodo();
+        };
+        updateDisplay();
+    });
 
     function updateDisplay() {
         removeAllChildNodes(listContainer);
@@ -30,8 +39,8 @@ const displayController = (() => {
         if (currentProject !== "all") {
             _todos = _todos.filter((element) => {
                 return element.project === currentProject;
-            })
-        }
+            });
+        };
 
         _todos.forEach(todo => {
             createTodo(todo);
@@ -94,7 +103,7 @@ const displayController = (() => {
         todoListItem.creationDate = todo.creationDate;
 
         // Click to expand 
-        todoListItem.addEventListener('click', () => {
+        todoListItem.addEventListener('click', (event) => {
             if (todoListItem.isExpanded) {
                 todoListItem.isExpanded = false;
                 todoListItem.classList.remove('expanded');
@@ -104,6 +113,7 @@ const displayController = (() => {
                 todoListItem.classList.add('expanded');
                 expandTodo(todoListItem);
             };
+            event.stopPropagation();
         });
 
         // Create unexpanded elements
@@ -176,9 +186,10 @@ const displayController = (() => {
 
         deleteButton.textContent = "X";
         deleteButton.classList.add('todo-delete');
-        deleteButton.onclick = () => {
+        deleteButton.onclick = (event) => {
             todoListItem.remove();
             todoController.removeTodo(todoListItem.id);
+            event.stopPropagation();
         }
 
         todoListItem.append(description, deleteButton);
@@ -219,18 +230,26 @@ const displayController = (() => {
             }
         });
 
-        const project = todoListItem.project;
-        // come back later and make this editable when project field is created
-
-        const priorities = document.querySelectorAll('.todo-project');
-        let priority;
-        priorities.forEach(element => {
+        const projects = document.querySelectorAll('.todo-project');
+        let project;
+        projects.forEach(element => {
             if (element.id == id) {
-                priority = element.textContent;
-                todoListItem.priority = priority;
+                project = element.textContent;
+                todoListItem.project = project;
             }
         });
 
+        
+        const priority = todoListItem.priority;
+        // const priorities = document.querySelectorAll('.todo-project');
+        // let priority;
+        // priorities.forEach(element => {
+        //     if (element.id == id) {
+        //         priority = element.textContent;
+        //         todoListItem.priority = priority;
+        //     }
+        // });
+        
         let description;
         if (todoListItem.isExpanded) {
             const descriptions = (document.querySelectorAll('.todo-description'));
@@ -264,6 +283,7 @@ const displayController = (() => {
         element.addEventListener('input', () => {
             const content = getContent(todoListItem);
             todoController.editTodo(content[0], content[1], content[2], content[3], content[4], content[5], content[6]);
+            updateSidebar();
         });
             
         element.contentEditable = true;
