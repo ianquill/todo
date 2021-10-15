@@ -14,12 +14,12 @@ const displayController = (() => {
     }
 
     function createTodo(todo) {
-        // create todo with 3 containers inside
         const todoListItem = document.createElement('div');
         todoListItem.isExpanded = false;
 
         todoListItem.classList.add('todo-list-item');
         
+        // Copy todo's details into container 
         todoListItem.id = todo.id;
         todoListItem.title = todo.title;
         todoListItem.isChecked = todo.isChecked;
@@ -29,6 +29,7 @@ const displayController = (() => {
         todoListItem.description = todo.description;
         todoListItem.creationDate = todo.creationDate;
 
+        // Click to expand 
         todoListItem.addEventListener('click', () => {
             if (todoListItem.isExpanded) {
                 todoListItem.isExpanded = false;
@@ -38,10 +39,10 @@ const displayController = (() => {
                 todoListItem.isExpanded = true;
                 todoListItem.classList.add('expanded');
                 expandTodo(todoListItem);
-            }
-            
+            };
         });
 
+        // Create unexpanded elements
         const _left = document.createElement('p');
         const _center = document.createElement('p');
         const _right = document.createElement('p');
@@ -57,52 +58,47 @@ const displayController = (() => {
         _check.classList.add('todo-check');
         _check.setAttribute("type", "checkbox");
 
-        // Bullet point event
+        // Checkbox event
         _check.addEventListener('click', (event) => {
             const content = getContent(todoListItem);
             todoController.editTodo(content[0], content[1], content[2], content[3], content[4], content[5], content[6]);
-            // _check.checked != _check.checked;
             event.stopPropagation();
         });
-
-        // testing editable content
-        _left.classList.add('todo-list-text');
-        _left.classList.add('todo-title');
-        _left.classList.add('todo-left');
 
         makeEditable(_left, todoListItem);
         makeEditable(_center, todoListItem);
         makeEditable(_right, todoListItem);
-
+        
+        _left.classList.add('todo-list-text');
+        _left.classList.add('todo-title');
+        _left.classList.add('todo-left');
         _center.classList.add('todo-list-text');
         _center.classList.add('todo-center');
         _center.classList.add('todo-duedate');
         _right.classList.add('todo-list-text');
         _right.classList.add('todo-right');
-        _right.classList.add('todo-priority');
+        _right.classList.add('todo-project');
         
-
+        // Populate text areas
         for (const key in todo) {
             if (key === "isChecked") {
                 _check.checked = todo.isChecked;
             }
-
             if (key === "title") {
                 _left.textContent = todo[key];
             }
             if (key === "dueDate") {
                 _center.textContent = todo[key];
             }
-            if (key === "priority") {
+            if (key === "project") {
                 _right.textContent = todo[key];
             };
-        }
+        };
 
         _leftContainer.append(_check, _left);
         todoListItem.append(_leftContainer,_center, _right);
         listContainer.appendChild(todoListItem);
-        
-    }
+    };
 
     function expandTodo(todoListItem) {
         const description = document.createElement('div');
@@ -162,7 +158,7 @@ const displayController = (() => {
         const project = todoListItem.project;
         // come back later and make this editable when project field is created
 
-        const priorities = document.querySelectorAll('.todo-priority');
+        const priorities = document.querySelectorAll('.todo-project');
         let priority;
         priorities.forEach(element => {
             if (element.id == id) {
@@ -208,10 +204,6 @@ const displayController = (() => {
             
         element.contentEditable = true;
         element.spellcheck = false;
-    }
-
-    function getIsExpanded(todoListItem) {
-        return todoListItem.isExpanded;
     }
 
     return { initDisplay };

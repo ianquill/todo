@@ -61,7 +61,7 @@ const todoController = (() => {
         };
     };
 
-    // DEBUG - Returns todos array
+    // Returns todos array
     function getTodos() {
         return todos;
     }
