@@ -1,14 +1,4 @@
 # TODO
-// sidebar functionality      
-
-// initialization:
-// first look through all notes and make a project item for each project found
-// clicking one of these sorts by that keyword
-// each time a note is created / edited, refresh the project list
-
-
-// ability to add new todo
-// make editing fields more obvious
 
 // localStorage             
 // dates            

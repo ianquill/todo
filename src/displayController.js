@@ -5,6 +5,8 @@ const displayController = (() => {
     const mainContent = document.getElementById('main-content');
     const listContainer = document.getElementById('list-container');
     let currentProject = "all";
+
+    // Click main page to create new note
     listContainer.addEventListener('click', () => {
         console.log("triggered new note");
         if (currentProject !== "all"){
