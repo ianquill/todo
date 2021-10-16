@@ -198,6 +198,13 @@ body {
     text-justify: left;
 }
 
+.todo-duedate {
+    border: 0;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
 .todo-right {
     margin-right: 50px;
 }

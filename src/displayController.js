@@ -118,7 +118,7 @@ const displayController = (() => {
 
         // Create unexpanded elements
         const _left = document.createElement('p');
-        const _center = document.createElement('p');
+        const _center = document.createElement('input');
         const _right = document.createElement('p');
         const _check = document.createElement('input');
         const _leftContainer = document.createElement('div');
@@ -152,6 +152,9 @@ const displayController = (() => {
         _right.classList.add('todo-list-text');
         _right.classList.add('todo-right');
         _right.classList.add('todo-project');
+
+        _center.type = "date";
+        // _center.value = "";
         
         // Populate text areas
         for (const key in todo) {
@@ -162,7 +165,7 @@ const displayController = (() => {
                 _left.textContent = todo[key];
             }
             if (key === "dueDate") {
-                _center.textContent = todo[key];
+                _center.value = todo[key];
             }
             if (key === "project") {
                 _right.textContent = todo[key];
@@ -268,7 +271,7 @@ const displayController = (() => {
         let dueDate;
         dueDates.forEach(element => {
             if (element.id == id) {
-                dueDate = element.textContent;
+                dueDate = element.value;
                 todoListItem.dueDate = dueDate;
             }
         });
