@@ -14,10 +14,6 @@ function testing() {
     todoController.addTodo('finish slides for presentation', true, "work");
 };
 
-testing();
-testing();
-testing();
-
 displayController.updateDisplay();
 
 console.log(todoController.findTodoById(3));

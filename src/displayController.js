@@ -8,7 +8,7 @@ const displayController = (() => {
     let todos = [];
 
     function isTodoEmpty(todo) {
-        return (todo.title === "undefined" || todo.title === "") 
+        return (todo === undefined || todo.title === "undefined" || todo.title === "") 
     }
 
     function updateDisplay() {
@@ -26,7 +26,6 @@ const displayController = (() => {
         dueDateTitle.classList.add('title');
         projectTitle.classList.add('title');
         currentProjectTitle.textContent = currentProject;
-        // ^^ change this to a variable that changes when sidebar is clicked
         dueDateTitle.textContent = "due";
         projectTitle.textContent = "project";
 
@@ -53,7 +52,7 @@ const displayController = (() => {
         // Click empty space to create new note
         empty.addEventListener('click', () => {
             console.log(todos[todos.length-1]);
-            if (!isTodoEmpty(todos[todos.length -1])) {
+            if (!isTodoEmpty(todos[todos.length -1]) || todos[todos.length-1] == undefined) {
                 console.log("triggered new note");
                 if (currentProject !== "all"){
                     todoController.addTodo("", "", currentProject);

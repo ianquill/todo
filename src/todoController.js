@@ -7,26 +7,53 @@ const Todo = (
     dueDate,
     description,
     creationDate
-) => {
-    return {id, title, isChecked, project, priority, dueDate, description, creationDate};
-};
+    ) => {
+        return {id, title, isChecked, project, priority, dueDate, description, creationDate};
+    };
+    
+    const todoController = (() => {
+        let todos = [];
 
-const todoController = (() => {
-    const todos = [];
-    let ids = 0;
-
+        function populateStorage() {
+            localStorage.setItem("todos", JSON.stringify(todos));
+            console.log(localStorage.getItem('todos'));
+        }
+        
+        function getStorage() {
+            let jsonString = localStorage.getItem("todos");
+            let retrievedObject = JSON.parse(jsonString);
+            todos = retrievedObject;
+        }
+        
+        // checks for storage on inital boot
+        if (!localStorage.getItem("todos")) {
+            populateStorage();
+        } else {
+            getStorage();
+        }
+        
+        let ids;
+        if (todos.length !== 0){
+            ids = todos[todos.length-1].id+1;
+        } else {
+            ids = 0;
+        }
+        console.log(ids);
+        
     // Adds a new todo to todos[] and assign it an ID
     function addTodo(title, isChecked, project, priority, dueDate, description, creationDate) {
         ids++;
         const id = ids;  
         const _new = Todo(id, title, isChecked, project, priority, dueDate, description, creationDate);
         todos.push(_new);
+        populateStorage();
     }
     
     // Remove todo by ID
     function removeTodo(id) {
         const _index = findIndexById(id);
         todos.splice(_index, 1);
+        populateStorage();
     }
 
     function editTodo(id, title, isChecked, project, priority, dueDate, description, creationDate) {
@@ -40,6 +67,7 @@ const todoController = (() => {
         _todo.dueDate = dueDate;
         _todo.description = description;
         _todo.creationDate = creationDate;
+        populateStorage();
     }
     
     // Finds todo by ID, returning object NOT SURE IF I NEED THIS ONE
@@ -81,7 +109,10 @@ const todoController = (() => {
         return projects;
     }
 
-    return { addTodo, getTodos, removeTodo, editTodo, findTodoById, getProjects };
+
+    
+
+    return { addTodo, getTodos, removeTodo, editTodo, findTodoById, getProjects, populateStorage };
 
 })();
 
