@@ -4,8 +4,13 @@ const displayController = (() => {
     const content = document.getElementById('content');
     const mainContent = document.getElementById('main-content');
     const listContainer = document.getElementById('list-container');
+    let searchbar = document.getElementById('search');
     let currentProject = "all";
-    let todos = [];
+    let todos = todoController.getTodos;
+
+    searchbar.addEventListener('input', () => {
+        updateDisplay();
+    })
 
     function isTodoEmpty(todo) {
         return (todo === undefined || todo.title === "undefined" || todo.title === "") 
@@ -32,6 +37,7 @@ const displayController = (() => {
         listLegend.append(currentProjectTitle, dueDateTitle, projectTitle);
         listContainer.appendChild(listLegend);
 
+        // filter array of all todos by current project selected, only show those
         let _todos = todoController.getTodos();
         if (currentProject !== "all") {
             _todos = _todos.filter((element) => {
@@ -41,6 +47,14 @@ const displayController = (() => {
                 return element.project === currentProject;
             });
         };
+
+        // searchbar filters todos        
+        if (searchbar.value.length > 0) {
+            _todos = _todos.filter((e1) => {
+                return (e1.title.toLowerCase().includes(searchbar.value.toLowerCase()))
+
+            })
+        }
 
         _todos.forEach(todo => {
             createTodo(todo);

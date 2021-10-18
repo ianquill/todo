@@ -1,7 +1,12 @@
 # TODO
 
+// search bar
 
-// localStorage             
+    // add event listener to searchbar input (keyup?)                      
+        // runs updateDisplay()
+
+// project as input
+
 // dates            
 // figure out sublists              
 
@@ -13,6 +18,5 @@
 // filling project field moves delete button and date; keep everything anchored                   
 // input areas still aren't obvious enough          
 // date field is full width / shows white while outer div is hovered            
-// make clickable area only below todos to create new todo      
 
 // userselect none on sidebar, legend           
