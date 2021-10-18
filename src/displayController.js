@@ -142,6 +142,7 @@ const displayController = (() => {
         _center.id = todo.id;
         _right.id = todo.id;
         _check.id = todo.id;
+        _left.placeholder = "title";
 
 
         _leftContainer.classList.add('left-container');

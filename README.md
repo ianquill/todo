@@ -1,7 +1,5 @@
 # TODO
 
-// prevent more than one new note from being created before any edits have been made    
-    // make an array of current todo cards, check last item added to it?    
 
 // localStorage             
 // dates            
@@ -11,3 +9,7 @@
 // https://web.dev/drag-and-drop/       
 
 // <select> pulldown for priority (maybe put this into expanded card and not normal todo)        
+
+- filling project field moves delete button and date; keep everything anchored          
+- input areas still aren't obvious enough
+- date field is full width / shows white while outer div is hovered
