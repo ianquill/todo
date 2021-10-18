@@ -7,20 +7,6 @@ const displayController = (() => {
     let currentProject = "all";
     let todos = [];
 
-    // Click main page to create new note
-    listContainer.addEventListener('click', () => {
-        console.log(todos[todos.length-1]);
-        if (!isTodoEmpty(todos[todos.length -1])) {
-            console.log("triggered new note");
-            if (currentProject !== "all"){
-                todoController.addTodo("", "", currentProject);
-            } else {
-                todoController.addTodo();
-            };
-            updateDisplay();
-        }
-    });
-
     function isTodoEmpty(todo) {
         return (todo.title === "undefined" || todo.title === "") 
     }
@@ -60,6 +46,25 @@ const displayController = (() => {
         _todos.forEach(todo => {
             createTodo(todo);
         });
+
+        const empty = document.createElement('div');
+        empty.classList.add('empty');
+        
+        // Click empty space to create new note
+        empty.addEventListener('click', () => {
+            console.log(todos[todos.length-1]);
+            if (!isTodoEmpty(todos[todos.length -1])) {
+                console.log("triggered new note");
+                if (currentProject !== "all"){
+                    todoController.addTodo("", "", currentProject);
+                } else {
+                    todoController.addTodo();
+                };
+                updateDisplay();
+            }
+        });
+
+        listContainer.appendChild(empty);
 
         updateSidebar();
     }
@@ -196,10 +201,11 @@ const displayController = (() => {
     };
 
     function expandTodo(todoListItem) {
-        const description = document.createElement('div');
+        const description = document.createElement('textarea');
         const deleteButton = document.createElement('button');
         const _todo = todoController.findTodoById(todoListItem.id);
         description.textContent = _todo.description;
+        description.placeholder = "Type your description here";
         description.classList.add('todo-list-text');
         description.classList.add('todo-description');
         description.id = todoListItem.id;
