@@ -1,9 +1,6 @@
 # TODO
 
-// search bar
-
-    // add event listener to searchbar input (keyup?)                      
-        // runs updateDisplay()
+// description isn't saving after closing expanded card?
 
 // project as input
 
