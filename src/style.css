@@ -201,6 +201,12 @@ body {
     background-color: #FF686B;
 }
 
+.todo-title {
+    border: 0;
+    font-family: inherit;
+    font-size: 16px;
+}
+
 /* .todo-center {
     text-justify: left;
     width: fit-content;

@@ -137,7 +137,7 @@ const displayController = (() => {
         });
 
         // Create unexpanded elements
-        const _left = document.createElement('p');
+        const _left = document.createElement('input');
         const _center = document.createElement('input');
         const _right = document.createElement('p');
         const _check = document.createElement('input');
@@ -184,7 +184,7 @@ const displayController = (() => {
                 _check.checked = todo.isChecked;
             }
             if (key === "title") {
-                _left.textContent = todo[key];
+                _left.value = todo[key];
             }
             if (key === "dueDate") {
                 _center.value = todo[key];
@@ -243,7 +243,7 @@ const displayController = (() => {
         let title;
         titles.forEach(element => {
             if (element.id == id) {
-                title = element.textContent;
+                title = element.value;
                 todoListItem.title = title;
             }
         })
