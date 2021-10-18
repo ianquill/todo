@@ -193,7 +193,7 @@ body {
     height: 25px;
     border-radius: 50%;
     cursor: pointer;
-    border: 2px black dotted;
+    border: 1px black solid;
     margin-right: 14px;
 }
 

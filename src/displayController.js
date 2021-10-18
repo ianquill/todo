@@ -58,7 +58,7 @@ const displayController = (() => {
                 if (currentProject !== "all"){
                     todoController.addTodo("", "", currentProject);
                 } else {
-                    todoController.addTodo();
+                    todoController.addTodo("", "");
                 };
                 updateDisplay();
             }
