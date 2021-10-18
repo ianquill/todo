@@ -5,20 +5,30 @@ const displayController = (() => {
     const mainContent = document.getElementById('main-content');
     const listContainer = document.getElementById('list-container');
     let currentProject = "all";
+    let todos = [];
 
     // Click main page to create new note
     listContainer.addEventListener('click', () => {
-        console.log("triggered new note");
-        if (currentProject !== "all"){
-            todoController.addTodo("", "", currentProject);
-        } else {
-            todoController.addTodo();
-        };
-        updateDisplay();
+        console.log(todos[todos.length-1]);
+        if (!isTodoEmpty(todos[todos.length -1])) {
+            console.log("triggered new note");
+            if (currentProject !== "all"){
+                todoController.addTodo("", "", currentProject);
+            } else {
+                todoController.addTodo();
+            };
+            updateDisplay();
+        }
     });
 
+    function isTodoEmpty(todo) {
+        return (todo.title === "undefined" || todo.title === "") 
+    }
+
     function updateDisplay() {
+        // Clear list container
         removeAllChildNodes(listContainer);
+        todos = [];
 
         // generate legend
         const currentProjectTitle = document.createElement('h2');
@@ -40,6 +50,9 @@ const displayController = (() => {
         let _todos = todoController.getTodos();
         if (currentProject !== "all") {
             _todos = _todos.filter((element) => {
+                return element.project === currentProject;
+            });
+            todos = todos.filter((element) => {
                 return element.project === currentProject;
             });
         };
@@ -130,6 +143,7 @@ const displayController = (() => {
         _right.id = todo.id;
         _check.id = todo.id;
 
+
         _leftContainer.classList.add('left-container');
         _check.classList.add('todo-check');
         _check.setAttribute("type", "checkbox");
@@ -177,6 +191,7 @@ const displayController = (() => {
         _leftContainer.append(_check, _left);
         todoListItem.append(_leftContainer,_center, _right);
         listContainer.appendChild(todoListItem);
+        todos.push(todoListItem);
     };
 
     function expandTodo(todoListItem) {
@@ -194,6 +209,7 @@ const displayController = (() => {
         deleteButton.onclick = (event) => {
             todoListItem.remove();
             todoController.removeTodo(todoListItem.id);
+            updateDisplay();    // temp
             event.stopPropagation();
         }
 
