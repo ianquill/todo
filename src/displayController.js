@@ -310,7 +310,7 @@ const displayController = (() => {
             const descriptions = (document.querySelectorAll('.todo-description'));
             descriptions.forEach(element => {
                 if (element.id == id) {
-                    description = element.textContent;
+                    description = element.value;
                     todoListItem.description = description;
                 }
             }); 
