@@ -1,4 +1,6 @@
 import { todoController } from "./todoController.js";
+import SearchIcon from "./ic_search_white_24dp.png";
+import MenuIcon from "./ic_menu_white_24dp.png";
 
 const displayController = (() => {
     const content = document.getElementById('content');
@@ -8,6 +10,18 @@ const displayController = (() => {
     let currentProject = "all";
     let todos = todoController.getTodos;
 
+    // initialize searchbar
+    const searchbarMiddle = document.querySelector(".searchbar-middle");
+    const searchIcon = new Image();
+    searchIcon.src = SearchIcon;
+    searchIcon.id = "search-icon";
+    const header = document.getElementById("search-bar");
+    const menuIcon = new Image();
+    menuIcon.src = MenuIcon;
+    menuIcon.id = "menu-icon";
+
+    header.appendChild(menuIcon);
+    searchbarMiddle.appendChild(searchIcon);
     searchbar.addEventListener('input', () => {
         updateDisplay();
     })
