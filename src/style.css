@@ -80,6 +80,10 @@ body {
     outline: 0;
 }
 
+#search::placeholder {
+    color: rgba(255,255,255, 0.9);
+}
+
 #menu-icon {
     width: 30px;
     height: 30px;
