@@ -152,9 +152,7 @@ const displayController = (() => {
         todoListItem.dueDate = todo.dueDate;
         todoListItem.description = todo.description;
         todoListItem.creationDate = todo.creationDate;
-
-        console.log(`${todoListItem.title}'s priority is ${todoListItem.priority}`);
-
+        
         // Click to expand 
         todoListItem.addEventListener('click', (event) => {
             if (todoListItem.isExpanded) {
@@ -190,6 +188,15 @@ const displayController = (() => {
 
         // Checkbox event
         _check.addEventListener('click', (event) => {
+            if (_check.checked) {
+                _left.classList.add('crossed-out');
+                _center.classList.add('crossed-out');
+                _right.classList.add('crossed-out');
+            } else {
+                _left.classList.remove('crossed-out');
+                _center.classList.remove('crossed-out');
+                _right.classList.remove('crossed-out');
+            };
             const content = getContent(todoListItem);
             todoController.editTodo(content[0], content[1], content[2], content[3], content[4], content[5], content[6]);
             event.stopPropagation();
@@ -238,12 +245,23 @@ const displayController = (() => {
             };
         };
 
+        // initial check if check is filled to cross out todo
+        if (todoListItem.isChecked) {
+            _left.classList.add('crossed-out');
+            _center.classList.add('crossed-out');
+            _right.classList.add('crossed-out');
+        } else {
+            _left.classList.remove('crossed-out');
+            _center.classList.remove('crossed-out');
+            _right.classList.remove('crossed-out');
+        }
 
         _leftContainer.append(_check, _left);
         todoListItem.append(_leftContainer,_center, _right);
         listContainer.appendChild(todoListItem);
         todos.push(todoListItem);
     };
+
 
     function expandTodo(todoListItem) {
 
@@ -323,6 +341,9 @@ const displayController = (() => {
         todoListItem.removeChild(description);
         todoListItem.removeChild(deleteButton);
         todoListItem.removeChild(priority);
+
+        // testing
+        updateDisplay();
     }
 
     function getContent(todoListItem) {

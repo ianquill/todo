@@ -196,6 +196,10 @@ body {
     background-color: transparent;
 }
 
+.crossed-out {
+    text-decoration: line-through;
+}
+
 .todo-description {
     grid-row-start: 2;
     grid-row-end: 4;
@@ -259,11 +263,19 @@ body {
 }
 
 .lvl2 {
-    border-color: yellow;
+    border-color: rgb(221, 221, 117);
+}
+
+.lvl2:checked {
+    background-color: rgb(221, 221, 117);
 }
 
 .lvl3 {
-    border-color: green;
+    border-color: rgb(124, 236, 124);
+}
+
+.lvl3:checked {
+    background-color: rgb(124, 236, 124);
 }
 
 .todo-title {
@@ -280,14 +292,6 @@ body {
     font-size: inherit;
     font-weight: inherit;
     width: max-content;
-}
-
-input::-webkit-datetime-edit-day-field:focus,
-input::-webkit-datetime-edit-month-field:focus,
-input::-webkit-datetime-edit-year-field:focus {
-    background-color: red;
-    color: white;
-    outline: none;
 }
 
 .todo-project {
