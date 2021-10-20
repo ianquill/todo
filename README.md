@@ -1,5 +1,6 @@
 # TODO
 
+
 // fix colors on check priority levels (maybe change the way it modifies the look?)
 // cross out words on check?
 
