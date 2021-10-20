@@ -1,19 +1,16 @@
 # TODO
 
-// description isn't saving after closing expanded card?
+// fix colors on check priority levels (maybe change the way it modifies the look?)
+// cross out words on check?
 
-// project as input
+// create modal for top right interaction.. what am I doing with it?
+    ++ credits?
+    ++ brief description
+    ++ github link
 
 // dates            
-// figure out sublists              
 
 // drag and drop API            
 // https://web.dev/drag-and-drop/       
 
-// <select> pulldown for priority (maybe put this into expanded card and not normal todo)        
-
-// filling project field moves delete button and date; keep everything anchored                   
-// input areas still aren't obvious enough          
-// date field is full width / shows white while outer div is hovered            
-
-// userselect none on sidebar, legend           
+// input areas still aren't obvious enough               

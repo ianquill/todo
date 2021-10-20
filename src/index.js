@@ -13,7 +13,9 @@ function testing() {
     todoController.addTodo('buy birthday gift', false, "home");
     todoController.addTodo('finish slides for presentation', true, "work");
 };
+// testing();
 
 displayController.updateDisplay();
+
 
 console.log(todoController.findTodoById(3));

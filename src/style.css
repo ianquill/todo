@@ -188,7 +188,7 @@ body {
 }
 
 .todo-list-text:hover {
-    color: rgba(0,0,0,0.8);
+    color: rgba(0,0,0,0.6);
 }
 
 .todo-list-text {
@@ -210,6 +210,13 @@ body {
     resize: none;
 }
 
+.priority-select {
+    border: 0;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+}
+
 .todo-delete {
     background-color: #FF686B;
     color: white;
@@ -221,6 +228,7 @@ body {
     grid-row-end: 4;
     grid-column-start: 3;
     grid-column-end: 4;
+    justify-self: end;
 }
 
 .expanded {
@@ -239,7 +247,23 @@ body {
 }
 
 .todo-check:checked {
+    background-color: black;
+}
+
+.lvl1 {
+    border-color: #FF686B;
+}
+
+.lvl1:checked {
     background-color: #FF686B;
+}
+
+.lvl2 {
+    border-color: yellow;
+}
+
+.lvl3 {
+    border-color: green;
 }
 
 .todo-title {
@@ -256,6 +280,21 @@ body {
     font-size: inherit;
     font-weight: inherit;
     width: max-content;
+}
+
+input::-webkit-datetime-edit-day-field:focus,
+input::-webkit-datetime-edit-month-field:focus,
+input::-webkit-datetime-edit-year-field:focus {
+    background-color: red;
+    color: white;
+    outline: none;
+}
+
+.todo-project {
+    border: 0;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: right;
 }
 
 .todo-right {

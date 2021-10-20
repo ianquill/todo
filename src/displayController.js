@@ -3,6 +3,7 @@ import SearchIcon from "./ic_search_white_24dp.png";
 import MenuIcon from "./ic_menu_white_24dp.png";
 
 const displayController = (() => {
+
     const content = document.getElementById('content');
     const mainContent = document.getElementById('main-content');
     const listContainer = document.getElementById('list-container');
@@ -31,6 +32,7 @@ const displayController = (() => {
     }
 
     function updateDisplay() {
+
         // Clear list container
         removeAllChildNodes(listContainer);
         todos = [];
@@ -85,7 +87,7 @@ const displayController = (() => {
                 if (currentProject !== "all"){
                     todoController.addTodo("", "", currentProject);
                 } else {
-                    todoController.addTodo("", "");
+                    todoController.addTodo("", "", "");
                 };
                 updateDisplay();
             }
@@ -98,6 +100,7 @@ const displayController = (() => {
 
     // Clears sidebar and refreshes, trigger this on every edit (maybe just every edit to project)
     function updateSidebar() {
+
         const projects = todoController.getProjects();
         const list = document.getElementById('side-bar-projects');
 
@@ -134,6 +137,7 @@ const displayController = (() => {
     };
 
     function createTodo(todo) {
+
         const todoListItem = document.createElement('div');
         todoListItem.isExpanded = false;
 
@@ -148,6 +152,8 @@ const displayController = (() => {
         todoListItem.dueDate = todo.dueDate;
         todoListItem.description = todo.description;
         todoListItem.creationDate = todo.creationDate;
+
+        console.log(`${todoListItem.title}'s priority is ${todoListItem.priority}`);
 
         // Click to expand 
         todoListItem.addEventListener('click', (event) => {
@@ -166,7 +172,7 @@ const displayController = (() => {
         // Create unexpanded elements
         const _left = document.createElement('input');
         const _center = document.createElement('input');
-        const _right = document.createElement('p');
+        const _right = document.createElement('input');
         const _check = document.createElement('input');
         const _leftContainer = document.createElement('div');
 
@@ -175,6 +181,7 @@ const displayController = (() => {
         _right.id = todo.id;
         _check.id = todo.id;
         _left.placeholder = "title";
+        _right.placeholder = "Enter project here";
 
 
         _leftContainer.classList.add('left-container');
@@ -187,6 +194,15 @@ const displayController = (() => {
             todoController.editTodo(content[0], content[1], content[2], content[3], content[4], content[5], content[6]);
             event.stopPropagation();
         });
+
+        if (todoListItem.priority != 0) {
+            if (todoListItem.priority == 1)
+            _check.classList.add('lvl1');
+            else if (todoListItem.priority == 2)
+            _check.classList.add('lvl2');
+            else if (todoListItem.priority == 3)
+            _check.classList.add('lvl3');
+        }
 
         makeEditable(_left, todoListItem);
         makeEditable(_center, todoListItem);
@@ -201,6 +217,7 @@ const displayController = (() => {
         _right.classList.add('todo-list-text');
         _right.classList.add('todo-right');
         _right.classList.add('todo-project');
+
 
         _center.type = "date";
         // _center.value = "";
@@ -217,9 +234,10 @@ const displayController = (() => {
                 _center.value = todo[key];
             }
             if (key === "project") {
-                _right.textContent = todo[key];
+                _right.value = todo[key];
             };
         };
+
 
         _leftContainer.append(_check, _left);
         todoListItem.append(_leftContainer,_center, _right);
@@ -228,6 +246,7 @@ const displayController = (() => {
     };
 
     function expandTodo(todoListItem) {
+
         const description = document.createElement('textarea');
         const deleteButton = document.createElement('button');
         const _todo = todoController.findTodoById(todoListItem.id);
@@ -237,23 +256,65 @@ const displayController = (() => {
         description.classList.add('todo-description');
         description.id = todoListItem.id;
         makeEditable(description, todoListItem);
+        
+        // create priority selector
+        const priority = document.createElement('select');
+        priority.name = "priority";
+        
+        
+        priority.placeholder = "Priority";
+        priority.id = todoListItem.id;
+        priority.classList.add("priority-select");
+        const priorityLabel = document.createElement('label');
+        priorityLabel.for = "Priority:";
+        priorityLabel.textContent = "Priority:";
+        const lvlDefault = document.createElement('option');
+        lvlDefault.value = "";
+        lvlDefault.selected; 
+        lvlDefault.textContent = "--- choose a priority ---";
+        const lvl1 = document.createElement('option');
+        lvl1.value = 1;
+        lvl1.textContent = "High";
+        const lvl2 = document.createElement('option');
+        lvl2.value = 2;
+        lvl2.textContent = "Medium";
+        const lvl3 = document.createElement('option');
+        lvl3.value = 3;
+        lvl3.textContent = "Low";
+        
+        priority.append(lvlDefault, lvl1, lvl2, lvl3);
+        priority.addEventListener('click', (event) => {
+            event.stopPropagation();
+        });
+        priority.addEventListener('change', (event) => {
+            todoListItem.priority = priority.selectedIndex;
+            event.stopPropagation();
+        });
+        priority.selectedIndex = _todo.priority;
 
+        // HERE
+        console.log(_todo.priority);
+        console.log(priority.selectedIndex);
+        // HERE
+        
         deleteButton.textContent = "X";
         deleteButton.classList.add('todo-delete');
         deleteButton.onclick = (event) => {
             todoListItem.remove();
             todoController.removeTodo(todoListItem.id);
-            updateDisplay();    // temp
+            updateDisplay();
             event.stopPropagation();
         }
-
-        todoListItem.append(description, deleteButton);
+        
+        todoListItem.append(description, priority, deleteButton);
     }
-
+    
     // Closes expanded tab, saving
     function closeTodo(todoListItem) {
+        
         const description = todoListItem.querySelector('.todo-description');
         const deleteButton = todoListItem.querySelector('.todo-delete');
+        const priority = todoListItem.querySelector(".priority-select");
 
         // save before closing
         const content = getContent(todoListItem);
@@ -261,11 +322,13 @@ const displayController = (() => {
 
         todoListItem.removeChild(description);
         todoListItem.removeChild(deleteButton);
+        todoListItem.removeChild(priority);
     }
 
     function getContent(todoListItem) {
 
         const id = todoListItem.id;
+
         const titles = document.querySelectorAll('.todo-title');
         let title;
         titles.forEach(element => {
@@ -289,21 +352,27 @@ const displayController = (() => {
         let project;
         projects.forEach(element => {
             if (element.id == id) {
-                project = element.textContent;
+                project = element.value;
+                if (project != undefined)
                 todoListItem.project = project;
+                else todoListItem.project = "";
             }
         });
 
         
-        const priority = todoListItem.priority;
-        // const priorities = document.querySelectorAll('.todo-project');
-        // let priority;
-        // priorities.forEach(element => {
-        //     if (element.id == id) {
-        //         priority = element.textContent;
-        //         todoListItem.priority = priority;
-        //     }
-        // });
+        // const priority = todoListItem.priority;
+        let priority;
+        if (todoListItem.isExpanded) {
+            const priorities = document.querySelectorAll('.priority-select');
+            priorities.forEach(element => {
+                if (element.id == id) {
+                    priority = element.selectedIndex;
+                    todoListItem.priority = priority;
+                }
+            });
+        } else {
+            priority = todoListItem.priority;
+        }
         
         let description;
         if (todoListItem.isExpanded) {
@@ -335,7 +404,7 @@ const displayController = (() => {
         element.addEventListener('click', (event) => {
                 event.stopPropagation();
         });
-        element.addEventListener('input', () => {
+        element.addEventListener('input', (event) => {
             const content = getContent(todoListItem);
             todoController.editTodo(content[0], content[1], content[2], content[3], content[4], content[5], content[6]);
             updateSidebar();
