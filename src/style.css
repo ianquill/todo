@@ -219,6 +219,7 @@ body {
     background-color: transparent;
     font-family: inherit;
     font-size: inherit;
+    -webkit-appearance: none;
 }
 
 .todo-delete {
@@ -295,7 +296,6 @@ body {
 }
 
 .todo-project {
-    -webkit-appearance: none;
     border: 0;
     font-family: inherit;
     font-size: inherit;
